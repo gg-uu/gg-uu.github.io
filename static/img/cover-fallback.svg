@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="GG-SEC 安全博客封面">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0f1e"/>
+      <stop offset="0.55" stop-color="#101a33"/>
+      <stop offset="1" stop-color="#1a0f2e"/>
+    </linearGradient>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00e5a0"/>
+      <stop offset="1" stop-color="#00b8ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <g stroke="#00b8ff" stroke-opacity="0.10" stroke-width="1">
+    <line x1="0" y1="150" x2="1200" y2="150"/><line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="450" x2="1200" y2="450"/><line x1="0" y1="600" x2="1200" y2="600"/>
+    <line x1="300" y1="0" x2="300" y2="675"/><line x1="600" y1="0" x2="600" y2="675"/>
+    <line x1="900" y1="0" x2="900" y2="675"/>
+  </g>
+  <circle cx="1080" cy="120" r="160" fill="#00e5a0" opacity="0.06"/>
+  <circle cx="1080" cy="120" r="90" fill="none" stroke="#00e5a0" stroke-opacity="0.35" stroke-width="1.5"/>
+  <circle cx="1080" cy="120" r="50" fill="none" stroke="#00e5a0" stroke-opacity="0.2" stroke-width="1"/>
+  <g fill="#00e5a0">
+    <rect x="70" y="250" width="14" height="14" rx="2"/>
+    <rect x="92" y="250" width="14" height="14" rx="2" fill="#00b8ff"/>
+    <rect x="114" y="250" width="14" height="14" rx="2" fill="#c792ea"/>
+  </g>
+  <text x="70" y="370" font-family="monospace" font-size="58" fill="url(#neon)" font-weight="bold">GG-SEC</text>
+  <text x="72" y="404" font-family="monospace" font-size="18" fill="#8b98a5" letter-spacing="2">SECURITY NOTES &amp; TOOLS</text>
+  <text x="70" y="450" font-family="monospace" font-size="15" fill="#00e5a0">$ whoami --hacker</text>
+  <text x="70" y="478" font-family="monospace" font-size="15" fill="#8b98a5">$ cat notes/vuln-analysis.md</text>
+  <text x="70" y="560" font-family="monospace" font-size="13" fill="#4d5b6e">&gt;_ 漏洞分析 · 工具教程 · 渗透测试 · 安全运维</text>
+</svg>

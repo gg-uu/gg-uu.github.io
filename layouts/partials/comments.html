@@ -1,0 +1,36 @@
+{{ $provider := .Site.Params.comment.provider }}
+{{ if and $provider (ne .Params.comment false) }}
+<section class="post-comments">
+  <h3 class="comments-title">评论</h3>
+  {{ if eq $provider "waline" }}
+    <div id="waline"></div>
+    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+    <script type="module">
+    (function() {
+      try {
+        var serverURL = {{ .Site.Params.waline.serverURL | jsonify }};
+        if (!serverURL) { return; }
+        import('https://unpkg.com/@waline/client@v3/dist/waline.mjs').then(function(w) {
+          if (w && w.init) {
+            w.init({ el: '#waline', serverURL: serverURL, lang: 'zh-CN' });
+          }
+        });
+      } catch (e) { console.error(e); }
+    })();
+    </script>
+  {{ else if eq $provider "twikoo" }}
+    <div id="tcomment"></div>
+    <script src="https://cdn.staticfile.org/twikoo/1.6.39/twikoo.all.min.js"></script>
+    <script>
+    (function() {
+      try {
+        var envId = {{ .Site.Params.twikoo.envId | jsonify }};
+        if (!envId || typeof twikoo === 'undefined') { return; }
+        twikoo.init({ envId: envId, el: '#tcomment' });
+      } catch (e) { console.error(e); }
+    })();
+    </script>
+  {{ end }}
+  <p class="comments-tip">评论服务需在 hugo.toml 中配置后启用。</p>
+</section>
+{{ end }}

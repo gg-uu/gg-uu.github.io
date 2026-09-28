@@ -1,0 +1,6 @@
+{{ if and .Params.toc (not .Params.hideToc) }}
+<nav class="toc" aria-label="文章目录">
+  <div class="toc-title">目录</div>
+  {{ .TableOfContents }}
+</nav>
+{{ end }}

@@ -1,0 +1,20 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="brand-mark">&gt;_</span>
+        <span class="brand-name">{{ .Site.Title }}</span>
+        <p class="footer-desc">{{ .Site.Params.description }}</p>
+      </div>
+      <div class="footer-social">
+        {{ range .Site.Params.social }}
+          <a class="social-link" href="{{ .url }}" target="_blank" rel="noopener" title="{{ .name }}">{{ .name }}</a>
+        {{ end }}
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {{ now.Format "2006" }} {{ .Site.Title }} · {{ with .Site.Params.author }}{{ . }}{{ end }}</span>
+      <span>Built with <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> · Static Site</span>
+    </div>
+  </div>
+</footer>

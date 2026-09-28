@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode | default "zh" }}" data-theme="{{ with .Site.Params.defaultTheme }}{{ . }}{{ else }}dark{{ end }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  {{ partial "header.html" . }}
+  <main class="site-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  {{ if .Site.Params.showSearch }}
+    {{ partial "search-modal.html" . }}
+  {{ end }}
+  <script src="/js/main.js"></script>
+  {{ if .Site.Params.showSearch }}
+    <script src="/js/fuse.min.js"></script>
+    <script src="/js/search.js"></script>
+  {{ end }}
+</body>
+</html>

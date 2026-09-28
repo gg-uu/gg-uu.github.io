@@ -1,0 +1,7 @@
+<div class="codeblock">
+  <div class="codeblock-head">
+    <span class="codeblock-lang">{{ with .Type }}{{ . }}{{ else }}text{{ end }}</span>
+    <button class="codeblock-copy" data-copy>复制</button>
+  </div>
+  {{ highlight .Inner .Type }}
+</div>

@@ -1,0 +1,31 @@
+{{ define "main" }}
+<div class="container">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-inner">
+      <h1 class="hero-title">{{ .Site.Title }}<span class="cursor">▊</span></h1>
+      <p class="hero-sub">{{ .Site.Params.subtitle }}</p>
+      <p class="hero-desc">{{ .Site.Params.description }}</p>
+      <div class="hero-stats">
+        {{ $posts := where .Site.RegularPages "Type" "posts" }}
+        <span>文章 <b>{{ len $posts }}</b></span>
+        <span>标签 <b>{{ len .Site.Taxonomies.tags }}</b></span>
+        <span>分类 <b>{{ len .Site.Taxonomies.categories }}</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 最新文章（置顶优先，其余按日期倒序） -->
+  <section class="post-list">
+    <h2 class="section-title">最新文章</h2>
+    {{ $posts := partial "sorted-posts.html" (where .Site.RegularPages "Type" "posts") }}
+    {{ range first 8 $posts }}
+      {{ partial "post-card.html" . }}
+    {{ end }}
+    {{ if gt (len $posts) 8 }}
+      <div class="list-more"><a href="/categories/">查看更多文章 →</a></div>
+    {{ end }}
+  </section>
+</div>
+{{ end }}

@@ -1,0 +1,15 @@
+{{ define "main" }}
+<div class="container list-page">
+  <header class="page-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="post-list">
+    {{ $posts := partial "sorted-posts.html" .Pages }}
+    {{ range $posts }}
+      {{ partial "post-card.html" . }}
+    {{ end }}
+  </div>
+</div>
+{{ end }}

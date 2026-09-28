@@ -1,0 +1,49 @@
+{{ define "main" }}
+<div class="container terms-page">
+  <header class="page-head">
+    <h1>{{ .Title }}</h1>
+  </header>
+
+  {{ if eq .Data.Plural "categories" }}
+    <!-- 分类页：CSS 环形统计图（构建时生成，零依赖） -->
+    {{ $terms := .Data.Terms.ByCount }}
+    {{ $total := 0 }}
+    {{ range $terms }}{{ $total = add $total .Count }}{{ end }}
+    {{ $colors := slice "#00e5a0" "#00b8ff" "#c792ea" "#f4b393" "#ff6b6b" "#94d8c3" "#e4d48f" "#eaa7b2" "#9eacea" "#8bc8ea" }}
+    {{ $acc := 0.0 }}
+    {{ $n := len $terms }}
+    <div class="chart-card">
+      <div class="chart-title">文章分类统计图 · 共 {{ $n }} 个分类 · {{ $total }} 篇文章</div>
+      <div class="donut-wrap">
+        <div class="donut" style="background: conic-gradient({{ range $i, $t := $terms }}{{ $pct := mul (div (float $t.Count) (float $total)) 100.0 }}{{ $start := $acc }}{{ $end := add $acc $pct }}{{ $acc = $end }} {{ index $colors $i }} {{ printf "%.2f" $start }}% {{ printf "%.2f" $end }}%{{ if lt $i (sub $n 1) }},{{ end }}{{ end }})">
+          <div class="donut-hole">
+            <b>{{ $total }}</b>
+            <span>文章</span>
+          </div>
+        </div>
+        <ul class="donut-legend">
+          {{ range $i, $t := $terms }}
+            <li><span class="dot" style="background:{{ index $colors $i }}"></span>{{ $t.Page.Title }} · {{ $t.Count }} 篇（{{ printf "%.1f" (mul (div (float $t.Count) (float $total)) 100.0) }}%）</li>
+          {{ end }}
+        </ul>
+      </div>
+    </div>
+    <div class="terms-list">
+      {{ range $terms }}
+        <a class="term" href="{{ .Page.Permalink }}">
+          {{ .Page.Title }} <span class="term-count">{{ .Count }} 篇</span>
+        </a>
+      {{ end }}
+    </div>
+  {{ else }}
+    <!-- 标签页：标签云 -->
+    <div class="terms-cloud">
+      {{ range .Data.Terms.ByCount }}
+        <a class="term" href="{{ .Page.Permalink }}" style="--size: {{ add 0.9 (mul (div (float .Count) 5) 0.4) }}em">
+          {{ .Page.Title }} <span class="term-count">{{ .Count }}</span>
+        </a>
+      {{ end }}
+    </div>
+  {{ end }}
+</div>
+{{ end }}

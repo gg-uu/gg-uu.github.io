@@ -1,0 +1,121 @@
+# =============================================================================
+# GG-Sec — 网络安全技术博客
+# GitHub Pages: https://gg-uu.github.io/
+# Hugo Extended >= 0.120
+# =============================================================================
+baseURL = 'https://gg-uu.github.io/'
+title = 'GG-Sec'
+languageCode = 'zh-cn'
+defaultContentLanguage = 'zh'
+hasCJKLanguage = true
+enableRobotsTXT = true
+enableGitInfo = false
+copyright = '© GG-Sec'
+
+# --- 分页 ---
+[pagination]
+  pagerSize = 8
+
+# --- 分类与标签 ---
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+
+# --- 输出格式：home 额外输出 JSON（供 Fuse.js 全文搜索索引）---
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+  section = ['HTML', 'RSS']
+
+# --- Markdown 渲染 ---
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = 'dracula'          # 代码高亮主题（安全/终端风格）
+    noClasses = false
+    lineNos = true
+    lineNumbersInTable = true
+    tabWidth = 4
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+
+# =============================================================================
+# 站点参数
+# =============================================================================
+[params]
+  author = 'gg-uu'
+  description = '一个网络安全从业者的技术博客：漏洞分析、红蓝对抗、安全工具与渗透测试教程。'
+  subtitle = 'Security Notes & Tools'
+  keywords = ['网络安全', '信息安全', '渗透测试', '漏洞分析', '红队', '蓝队', 'CTF', '安全工具']
+  accentColor = '#00e5a0'      # 主色调（终端青绿）
+  accentColor2 = '#00b8ff'     # 辅助色（电光蓝）
+  defaultTheme = 'dark'        # dark | light | auto
+  showToc = true               # 文章默认显示目录（单篇可 front matter 覆盖 toc: false）
+  showSearch = true            # 全站搜索
+  showTagsOnPost = true
+  showReadingTime = true
+  dateFormat = '2006-01-02'
+
+  [params.search]
+    threshold = 0.35           # Fuse.js 匹配灵敏度
+    maxResults = 20
+
+  # 导航菜单
+  [[params.menu.main]]
+    name = '首页'
+    url = '/'
+    weight = 1
+  [[params.menu.main]]
+    name = '文章'
+    url = '/categories/'
+    weight = 2
+  [[params.menu.main]]
+    name = '分类'
+    url = '/categories/'
+    weight = 3
+  [[params.menu.main]]
+    name = '归档'
+    url = '/archives/'
+    weight = 4
+  [[params.menu.main]]
+    name = '标签'
+    url = '/tags/'
+    weight = 5
+  [[params.menu.main]]
+    name = '关于'
+    url = '/about/'
+    weight = 6
+
+  # 页脚社交
+  [[params.social]]
+    name = 'GitHub'
+    url = 'https://github.com/gg-uu'
+    icon = 'github'
+  [[params.social]]
+    name = 'RSS'
+    url = '/index.xml'
+    icon = 'rss'
+  [[params.social]]
+    name = 'Email'
+    url = 'mailto:gg-uu@users.noreply.github.com'
+    icon = 'mail'
+
+  # 默认文章头图（无 cover 时使用，可留空）
+  defaultCover = ''
+
+  # 版权声明（文章页底部 CC 协议）
+  license = true
+
+  # --- 评论系统（可选）---
+  # provider: waline | twikoo，留空则不启用评论
+  # 单篇文章可在 front matter 写 comment: false 关闭
+  [params.comment]
+    provider = ''
+  [params.waline]
+    serverURL = ''
+    placeholder = '分享你的想法...'
+  [params.twikoo]
+    envId = ''

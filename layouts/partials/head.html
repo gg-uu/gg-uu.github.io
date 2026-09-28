@@ -1,0 +1,11 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ .Site.Title }} — {{ .Site.Params.description }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+{{ with .Site.Params.keywords }}<meta name="keywords" content="{{ delimit . ", " }}">{{ end }}
+<meta name="generator" content="Hugo">
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }} RSS" href="{{ "/index.xml" | absURL }}">
+<link rel="stylesheet" href="/css/main.css">
+{{ block "head-extra" . }}{{ end }}
