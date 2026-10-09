@@ -1,0 +1,25 @@
+{{ define "main" }}
+<div class="container links-page">
+  <header class="page-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+  </header>
+  <div class="page-body">{{ .Content }}</div>
+  {{ with .Site.Data.links.groups }}
+    {{ range . }}
+      <section class="link-group">
+        <h2>{{ .name }}</h2>
+        {{ with .desc }}<p class="page-desc">{{ . }}</p>{{ end }}
+        <div class="link-grid">
+          {{ range .items }}
+            <a class="link-card" href="{{ .url }}" target="_blank" rel="noopener">
+              <strong>{{ .name }}</strong>
+              <span>{{ .desc }}</span>
+            </a>
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+  {{ end }}
+</div>
+{{ end }}

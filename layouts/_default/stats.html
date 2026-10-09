@@ -1,0 +1,69 @@
+{{ define "main" }}
+<div class="container stats-page">
+  <header class="page-head">
+    <h1>{{ .Title }}</h1>
+    <p class="page-desc">{{ .Description }}</p>
+  </header>
+
+  {{ $posts := where .Site.RegularPages "Type" "posts" }}
+  {{ $words := 0 }}
+  {{ range $posts }}{{ $words = add $words .WordCount }}{{ end }}
+
+  <div class="stat-cards">
+    <div class="stat-card"><b>{{ len $posts }}</b><span>文章</span></div>
+    <div class="stat-card"><b>{{ $words }}</b><span>字数</span></div>
+    <div class="stat-card"><b>{{ len .Site.Taxonomies.categories }}</b><span>分类</span></div>
+    <div class="stat-card"><b>{{ len .Site.Taxonomies.tags }}</b><span>标签</span></div>
+    <div class="stat-card"><b>{{ len .Site.Taxonomies.series }}</b><span>专题</span></div>
+  </div>
+
+  {{ $terms := .Site.Taxonomies.categories.ByCount }}
+  {{ $total := 0 }}
+  {{ range $terms }}{{ $total = add $total .Count }}{{ end }}
+  {{ $colors := slice "#00e5a0" "#00b8ff" "#c792ea" "#f4b393" "#ff6b6b" }}
+  {{ $acc := 0.0 }}
+  {{ $n := len $terms }}
+  {{ if gt $n 0 }}
+  <div class="chart-card">
+    <div class="chart-title">分类分布</div>
+    <div class="donut-wrap">
+      <div class="donut" style="background: conic-gradient({{ range $i, $t := $terms }}{{ $pct := mul (div (float $t.Count) (float $total)) 100.0 }}{{ $start := $acc }}{{ $end := add $acc $pct }}{{ $acc = $end }} {{ index $colors $i }} {{ printf "%.2f" $start }}% {{ printf "%.2f" $end }}%{{ if lt $i (sub $n 1) }},{{ end }}{{ end }})">
+        <div class="donut-hole"><b>{{ $total }}</b><span>文章</span></div>
+      </div>
+      <ul class="donut-legend">
+        {{ range $i, $t := $terms }}
+          <li><span class="dot" style="background:{{ index $colors $i }}"></span>{{ $t.Page.Title }} · {{ $t.Count }}</li>
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+  {{ end }}
+
+  {{ $byMonth := $posts.GroupByDate "2006-01" }}
+  {{ $max := 0 }}
+  {{ range $byMonth }}{{ if gt (len .Pages) $max }}{{ $max = len .Pages }}{{ end }}{{ end }}
+  <div class="chart-card">
+    <div class="chart-title">发布节奏</div>
+    <div class="bar-chart">
+      {{ range $byMonth }}
+        {{ $h := 0.0 }}{{ if gt $max 0 }}{{ $h = mul (div (float (len .Pages)) (float $max)) 100.0 }}{{ end }}
+        <div class="bar-col">
+          <div class="bar" style="height: {{ printf "%.0f" $h }}%;"><span class="bar-val">{{ len .Pages }}</span></div>
+          <div class="bar-month">{{ .Key }}</div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+
+  {{ with .Site.Taxonomies.series }}
+  <div class="chart-card">
+    <div class="chart-title">专题进度</div>
+    <ul class="side-list">
+      {{ range .ByCount }}
+        <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a><span>{{ .Count }} 篇</span></li>
+      {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

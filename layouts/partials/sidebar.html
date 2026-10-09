@@ -1,0 +1,68 @@
+<aside class="sidebar">
+  <section class="side-card author-card">
+    <a class="author-avatar" href="{{ "/about/" | relURL }}">
+      <img src="{{ .Site.Params.avatar | relURL }}" alt="{{ .Site.Params.author }}">
+    </a>
+    <h3 class="author-name">{{ .Site.Params.authorName | default .Site.Params.author }}</h3>
+    <p class="author-role">{{ .Site.Params.role }}</p>
+    {{ with .Site.Params.authorCard.motto }}<p class="author-motto">{{ . }}</p>{{ end }}
+    {{ $posts := where .Site.RegularPages "Type" "posts" }}
+    <div class="author-stats">
+      <a href="{{ "/posts/" | relURL }}"><b>{{ len $posts }}</b><span>文章</span></a>
+      <a href="{{ "/categories/" | relURL }}"><b>{{ len .Site.Taxonomies.categories }}</b><span>分类</span></a>
+      <a href="{{ "/tags/" | relURL }}"><b>{{ len .Site.Taxonomies.tags }}</b><span>标签</span></a>
+    </div>
+  </section>
+
+  {{ with .Site.Params.notice }}
+  <section class="side-card notice-card">
+    <h4 class="side-title">{{ .title | default "公告" }}</h4>
+    <p>{{ .content }}</p>
+  </section>
+  {{ end }}
+
+  {{ with .Site.Taxonomies.categories }}
+  <section class="side-card">
+    <h4 class="side-title"><a href="{{ "/categories/" | relURL }}">分类</a></h4>
+    <ul class="side-list">
+      {{ range first 8 .ByCount }}
+        <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a><span>{{ .Count }}</span></li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  {{ with .Site.Taxonomies.series }}
+  <section class="side-card">
+    <h4 class="side-title"><a href="{{ "/series/" | relURL }}">专题</a></h4>
+    <ul class="side-list">
+      {{ range .ByCount }}
+        <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a><span>{{ .Count }}</span></li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  {{ with .Site.Taxonomies.tags }}
+  <section class="side-card">
+    <h4 class="side-title"><a href="{{ "/tags/" | relURL }}">热门标签</a></h4>
+    <div class="side-tags">
+      {{ range first 16 .ByCount }}
+        <a class="tag" href="{{ .Page.Permalink }}">#{{ .Page.Title }}</a>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  <section class="side-card">
+    <h4 class="side-title">最近文章</h4>
+    <ul class="side-recent">
+      {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
+        <li>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+          <time>{{ .Date.Format "2006-01-02" }}</time>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+</aside>

@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="container about-page">
+  <header class="page-head about-head">
+    <img class="about-avatar" src="{{ .Site.Params.avatar | relURL }}" alt="{{ .Site.Params.author }}">
+    <div>
+      <h1>{{ .Site.Params.authorName | default .Site.Params.author }}</h1>
+      <p class="page-desc">{{ .Site.Params.role }}</p>
+    </div>
+  </header>
+  <article class="post-body about-body">
+    {{ .Content }}
+  </article>
+</div>
+{{ end }}

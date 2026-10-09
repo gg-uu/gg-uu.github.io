@@ -5,7 +5,10 @@ lastmod: 2026-09-25
 description: "系统讲解 Nmap 的核心扫描原理、常用参数组合，以及如何利用它完成端口发现、服务识别与操作系统指纹探测。"
 categories: ["工具教程"]
 tags: ["nmap", "信息收集", "渗透测试", "端口扫描"]
+series: ["安全工具箱"]
 toc: true
+cover: "/img/covers/nmap.svg"
+draft: true
 ---
 
 Nmap（Network Mapper）是安全从业者使用频率最高的信息收集工具之一。它的核心能力包括主机发现、端口扫描、服务/版本识别和操作系统指纹探测。这篇文章从原理讲起，逐步覆盖实战中最常用的参数组合。

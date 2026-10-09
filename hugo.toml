@@ -11,15 +11,33 @@ hasCJKLanguage = true
 enableRobotsTXT = true
 enableGitInfo = false
 copyright = '© GG-Sec'
+summaryLength = 120
+disableKinds = []
 
 # --- 分页 ---
 [pagination]
   pagerSize = 8
 
-# --- 分类与标签 ---
+# --- 分类 / 标签 / 专题（系统化内容管理）---
 [taxonomies]
   category = 'categories'
   tag = 'tags'
+  series = 'series'
+
+# --- 相关文章 ---
+[related]
+  threshold = 60
+  includeNewer = true
+  toLower = true
+[[related.indices]]
+  name = 'tags'
+  weight = 100
+[[related.indices]]
+  name = 'categories'
+  weight = 80
+[[related.indices]]
+  name = 'series'
+  weight = 70
 
 # --- 输出格式：home 额外输出 JSON（供 Fuse.js 全文搜索索引）---
 [outputs]
@@ -31,65 +49,109 @@ copyright = '© GG-Sec'
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
   [markup.highlight]
-    style = 'dracula'          # 代码高亮主题（安全/终端风格）
-    noClasses = false
+    style = 'dracula'
+    noClasses = true
     lineNos = true
     lineNumbersInTable = true
     tabWidth = 4
+    guessSyntax = true
   [markup.tableOfContents]
     startLevel = 2
     endLevel = 4
     ordered = false
+
+# --- sitemap ---
+[sitemap]
+  changefreq = 'weekly'
+  filename = 'sitemap.xml'
+  priority = 0.5
 
 # =============================================================================
 # 站点参数
 # =============================================================================
 [params]
   author = 'gg-uu'
+  authorName = 'gg-uu'
+  role = '网络安全 / 信息安全从业者'
   description = '一个网络安全从业者的技术博客：漏洞分析、红蓝对抗、安全工具与渗透测试教程。'
   subtitle = 'Security Notes & Tools'
   keywords = ['网络安全', '信息安全', '渗透测试', '漏洞分析', '红队', '蓝队', 'CTF', '安全工具']
-  accentColor = '#00e5a0'      # 主色调（终端青绿）
-  accentColor2 = '#00b8ff'     # 辅助色（电光蓝）
-  defaultTheme = 'dark'        # dark | light | auto
-  showToc = true               # 文章默认显示目录（单篇可 front matter 覆盖 toc: false）
-  showSearch = true            # 全站搜索
+  accentColor = '#00e5a0'
+  accentColor2 = '#00b8ff'
+  defaultTheme = 'dark'
+  showToc = true
+  showSearch = true
   showTagsOnPost = true
   showReadingTime = true
+  showRelated = true
   dateFormat = '2006-01-02'
+  avatar = '/img/avatar.svg'
+  defaultCover = '/img/cover-fallback.svg'
+  license = true
+  since = '2026-01-01'
+  github = 'https://github.com/gg-uu'
+  githubRepo = 'https://github.com/gg-uu/gg-uu.github.io'
 
   [params.search]
-    threshold = 0.35           # Fuse.js 匹配灵敏度
+    threshold = 0.35
     maxResults = 20
 
-  # 导航菜单
+  [params.notice]
+    title = '公告'
+    content = '本站专注漏洞分析、工具教程、渗透测试方法论与应急响应，内容以防御视角与授权测试为前提，长期维护。'
+
+  [params.authorCard]
+    motto = '读日志、拆漏洞、写清楚。'
+    focus = '漏洞分析 · 安全工具 · 红蓝对抗'
+
+  # 顶栏：无 parent 为一级；有 parent 归入对应下拉
   [[params.menu.main]]
     name = '首页'
     url = '/'
     weight = 1
   [[params.menu.main]]
     name = '文章'
-    url = '/categories/'
+    url = '/posts/'
     weight = 2
   [[params.menu.main]]
     name = '分类'
     url = '/categories/'
-    weight = 3
+    parent = '文章'
+    weight = 21
+  [[params.menu.main]]
+    name = '专题'
+    url = '/series/'
+    parent = '文章'
+    weight = 22
   [[params.menu.main]]
     name = '归档'
     url = '/archives/'
-    weight = 4
+    parent = '文章'
+    weight = 23
   [[params.menu.main]]
     name = '标签'
     url = '/tags/'
-    weight = 5
+    parent = '文章'
+    weight = 24
+  [[params.menu.main]]
+    name = '统计'
+    url = '/stats/'
+    parent = '文章'
+    weight = 25
+  [[params.menu.main]]
+    name = '友链'
+    url = '/links/'
+    weight = 3
   [[params.menu.main]]
     name = '关于'
     url = '/about/'
-    weight = 6
+    weight = 4
 
-  # 页脚社交
   [[params.social]]
     name = 'GitHub'
     url = 'https://github.com/gg-uu'
@@ -103,15 +165,6 @@ copyright = '© GG-Sec'
     url = 'mailto:gg-uu@users.noreply.github.com'
     icon = 'mail'
 
-  # 默认文章头图（无 cover 时使用，可留空）
-  defaultCover = ''
-
-  # 版权声明（文章页底部 CC 协议）
-  license = true
-
-  # --- 评论系统（可选）---
-  # provider: waline | twikoo，留空则不启用评论
-  # 单篇文章可在 front matter 写 comment: false 关闭
   [params.comment]
     provider = ''
   [params.waline]

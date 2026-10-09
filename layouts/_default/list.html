@@ -2,14 +2,15 @@
 <div class="container list-page">
   <header class="page-head">
     <h1>{{ .Title }}</h1>
-    {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+    {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ else }}{{ with .Content }}<div class="page-desc">{{ . }}</div>{{ end }}{{ end }}
+    <p class="page-count">{{ len .Pages }} 篇</p>
   </header>
-
   <div class="post-list">
-    {{ $posts := partial "sorted-posts.html" .Pages }}
-    {{ range $posts }}
+    {{ $paginator := .Paginate (partial "sorted-posts.html" .Pages) }}
+    {{ range $paginator.Pages }}
       {{ partial "post-card.html" . }}
     {{ end }}
   </div>
+  {{ partial "pagination.html" $paginator }}
 </div>
 {{ end }}

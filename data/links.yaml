@@ -1,0 +1,39 @@
+groups:
+  - name: 安全社区
+    desc: 学习与跟踪行业动态
+    items:
+      - name: OWASP
+        url: https://owasp.org/
+        desc: Web 应用安全项目与 Top 10
+        avatar: ""
+      - name: PortSwigger Web Security Academy
+        url: https://portswigger.net/web-security
+        desc: 免费 Web 安全实验与教程
+        avatar: ""
+      - name: GTFOBins
+        url: https://gtfobins.github.io/
+        desc: Unix 二进制提权备忘
+        avatar: ""
+      - name: HackTricks
+        url: https://book.hacktricks.xyz/
+        desc: 渗透测试技巧手册
+        avatar: ""
+  - name: 工具文档
+    desc: 常用开源安全工具
+    items:
+      - name: Nmap
+        url: https://nmap.org/book/man.html
+        desc: 端口扫描与主机发现
+        avatar: ""
+      - name: ProjectDiscovery
+        url: https://docs.projectdiscovery.io/
+        desc: nuclei / subfinder / httpx
+        avatar: ""
+      - name: MITRE ATT&CK
+        url: https://attack.mitre.org/
+        desc: 对抗战术与技术知识库
+        avatar: ""
+      - name: SigmaHQ
+        url: https://github.com/SigmaHQ/sigma
+        desc: 通用检测规则格式
+        avatar: ""

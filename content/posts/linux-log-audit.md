@@ -4,7 +4,10 @@ date: 2026-09-05
 description: "以 Linux 环境为背景，讲解如何通过 auditd、SSH 登录日志、Web 访问日志等审计数据，定位异常行为并还原攻击链。"
 categories: ["安全运维"]
 tags: ["日志审计", "auditd", "sshd", "溯源", "应急响应"]
+series: ["应急响应手册"]
 toc: true
+cover: "/img/covers/audit.svg"
+draft: true
 ---
 
 当设备出现异常告警，第一步往往不是直接「杀毒」，而是**看日志、还原时间线**。日志审计是安全运维与应急响应的基本功。这篇文章以 Linux 审计日志为主线，演示攻击溯源的通用思路。

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#071018"/>
+  <circle cx="980" cy="160" r="140" fill="none" stroke="#00e5a0" stroke-opacity=".25"/>
+  <circle cx="980" cy="160" r="80" fill="none" stroke="#00b8ff" stroke-opacity=".3"/>
+  <text x="72" y="250" font-family="monospace" font-size="22" fill="#00b8ff">$ nmap -sC -sV target</text>
+  <text x="72" y="340" font-family="monospace" font-size="48" font-weight="700" fill="#e6edf3">Nmap 端口扫描</text>
+  <text x="72" y="400" font-family="monospace" font-size="18" fill="#8b98a5">host discovery · service fingerprint</text>
+</svg>

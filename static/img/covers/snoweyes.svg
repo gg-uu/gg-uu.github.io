@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#071018"/>
+  <circle cx="980" cy="200" r="160" fill="none" stroke="#00e5a0" stroke-opacity=".28"/>
+  <circle cx="980" cy="200" r="90" fill="none" stroke="#00b8ff" stroke-opacity=".35"/>
+  <circle cx="980" cy="200" r="28" fill="#00e5a0" opacity=".35"/>
+  <text x="72" y="240" font-family="monospace" font-size="20" fill="#00e5a0">scan --dom --js --headers</text>
+  <text x="72" y="340" font-family="monospace" font-size="48" font-weight="700" fill="#e6edf3">SnowEyes 雪瞳</text>
+  <text x="72" y="400" font-family="monospace" font-size="18" fill="#8b98a5">sensitive info · fingerprint · chrome extension</text>
+</svg>

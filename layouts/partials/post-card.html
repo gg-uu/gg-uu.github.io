@@ -1,32 +1,46 @@
 <article class="post-card">
-  {{ if .Params.cover }}
+  {{ $link := .Permalink }}
+  {{ $external := false }}
+  {{ with .Params.repo }}
+    {{ $link = . }}
+    {{ $external = true }}
+  {{ end }}
+  {{ $cover := .Params.cover | default .Site.Params.defaultCover }}
+  {{ if $cover }}
     <div class="post-cover">
-      <a href="{{ .Permalink }}"><img src="{{ .Params.cover }}" alt="{{ .Title }}" loading="lazy"></a>
+      <a href="{{ $link }}"{{ if $external }} target="_blank" rel="noopener"{{ end }}><img src="{{ $cover | relURL }}" alt="{{ .Title }}" loading="lazy"></a>
+      {{ if gt .Params.weight 0 }}<span class="pinned pin-on-cover">置顶</span>{{ end }}
     </div>
   {{ end }}
   <div class="post-body-inner">
     <div class="post-meta">
       {{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
-      {{ if gt .Params.weight 0 }}<span class="pinned" title="置顶">置顶</span>{{ end }}
+      {{ if and (not $cover) (gt .Params.weight 0) }}<span class="pinned" title="置顶">置顶</span>{{ end }}
       {{ if .Params.categories }}
         <span class="post-cats">
           {{ range .Params.categories }}<a class="cat" href="{{ "/categories/" | relLangURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}
         </span>
       {{ end }}
+      {{ if .Params.series }}
+        {{ range first 1 .Params.series }}
+          <a class="series-badge" href="{{ "/series/" | relLangURL }}{{ . | urlize }}/">{{ . }}</a>
+        {{ end }}
+      {{ end }}
       {{ if .Site.Params.showReadingTime }}
-        <span class="post-reading">{{ .ReadingTime }} min read</span>
+        <span class="post-reading">{{ .ReadingTime }} min</span>
       {{ end }}
       {{ if and .Lastmod (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}
         <span class="post-updated" title="最后更新">更新于 {{ .Lastmod.Format "2006-01-02" }}</span>
       {{ end }}
     </div>
-    <h2 class="post-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+    <h2 class="post-title"><a href="{{ $link }}"{{ if $external }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}</a></h2>
     {{ with .Description }}<p class="post-excerpt">{{ . }}</p>{{ else }}
       <p class="post-excerpt">{{ .Summary | plainify | truncate 160 }}</p>
     {{ end }}
     {{ if .Params.tags }}
       <div class="post-tags">
         {{ range .Params.tags }}<a class="tag" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/">#{{ . }}</a>{{ end }}
+        {{ with .Params.repo }}<a class="tag repo-link" href="{{ . }}" target="_blank" rel="noopener">GitHub</a>{{ end }}
       </div>
     {{ end }}
   </div>

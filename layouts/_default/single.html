@@ -3,11 +3,19 @@
   <div class="single-layout">
     <article class="post-content">
       <header class="post-head">
+        {{ $cover := .Params.cover | default .Site.Params.defaultCover }}
+        {{ if $cover }}
+          <div class="single-cover"><img src="{{ $cover | relURL }}" alt="{{ .Title }}"></div>
+        {{ end }}
         <h1 class="post-title">{{ .Title }}</h1>
         <div class="post-meta">
           {{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
           {{ if .Params.categories }}{{ range .Params.categories }}<a class="cat" href="{{ "/categories/" | relLangURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}{{ end }}
-          {{ if .Site.Params.showReadingTime }}<span class="post-reading">约 {{ .ReadingTime }} 分钟</span>{{ end }}
+          {{ if .Params.series }}{{ range .Params.series }}<a class="series-badge" href="{{ "/series/" | relLangURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}{{ end }}
+          {{ if .Site.Params.showReadingTime }}<span class="post-reading">约 {{ .ReadingTime }} 分钟 · {{ .WordCount }} 字</span>{{ end }}
+          {{ if and .Lastmod (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}
+            <span class="post-updated">更新于 {{ .Lastmod.Format "2006-01-02" }}</span>
+          {{ end }}
         </div>
         {{ if .Params.tags }}
           <div class="post-tags">
@@ -18,6 +26,47 @@
       <div class="post-body">
         {{ .Content }}
       </div>
+      {{ if .Params.series }}
+        {{ range .Params.series }}
+          {{ $term := . }}
+          {{ with index site.Taxonomies.series ($term | urlize) }}
+            <section class="series-nav">
+              <h3>专题 · {{ $term }}</h3>
+              <ol>
+                {{ range .Pages.ByDate }}
+                  <li{{ if eq .Permalink $.Permalink }} class="current"{{ end }}>
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                  </li>
+                {{ end }}
+              </ol>
+            </section>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+      {{ if and .Site.Params.showRelated .IsPage }}
+        {{ $related := .Site.RegularPages.Related . | first 3 }}
+        {{ if $related }}
+          <section class="related-posts">
+            <h3>相关文章</h3>
+            <div class="related-grid">
+              {{ range $related }}
+                <a class="related-item" href="{{ .Permalink }}">
+                  <span class="related-date">{{ .Date.Format "2006-01-02" }}</span>
+                  <strong>{{ .Title }}</strong>
+                </a>
+              {{ end }}
+            </div>
+          </section>
+        {{ end }}
+      {{ end }}
+      <nav class="post-pager">
+        {{ with .PrevInSection }}
+          <a class="pager-prev" href="{{ .Permalink }}"><span>上一篇</span>{{ .Title }}</a>
+        {{ else }}<span></span>{{ end }}
+        {{ with .NextInSection }}
+          <a class="pager-next" href="{{ .Permalink }}"><span>下一篇</span>{{ .Title }}</a>
+        {{ end }}
+      </nav>
       <footer class="post-foot">
         {{ if .Site.Params.license }}
         <div class="license">
@@ -27,7 +76,7 @@
       </footer>
       {{ partial "comments.html" . }}
     </article>
-    {{ if and .Site.Params.showToc .Params.toc }}
+    {{ if and .Site.Params.showToc (ne .Params.toc false) }}
       <aside class="toc-sidebar">
         {{ partial "toc.html" . }}
       </aside>

@@ -6,15 +6,31 @@
         <span class="brand-name">{{ .Site.Title }}</span>
         <p class="footer-desc">{{ .Site.Params.description }}</p>
       </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>导航</h4>
+          <a href="{{ "/posts/" | relURL }}">文章</a>
+          <a href="{{ "/categories/" | relURL }}">分类</a>
+          <a href="{{ "/series/" | relURL }}">专题</a>
+          <a href="{{ "/archives/" | relURL }}">归档</a>
+        </div>
+        <div class="footer-col">
+          <h4>站点</h4>
+          <a href="{{ "/stats/" | relURL }}">统计</a>
+          <a href="{{ "/links/" | relURL }}">友链</a>
+          <a href="{{ "/about/" | relURL }}">关于</a>
+          <a href="{{ "index.xml" | relURL }}">RSS</a>
+        </div>
+      </div>
       <div class="footer-social">
         {{ range .Site.Params.social }}
-          <a class="social-link" href="{{ .url }}" target="_blank" rel="noopener" title="{{ .name }}">{{ .name }}</a>
+          <a class="social-link" href="{{ .url }}" {{ if hasPrefix .url "http" }}target="_blank" rel="noopener"{{ end }} title="{{ .name }}">{{ .name }}</a>
         {{ end }}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© {{ now.Format "2006" }} {{ .Site.Title }} · {{ with .Site.Params.author }}{{ . }}{{ end }}</span>
-      <span>Built with <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> · Static Site</span>
+      <span>© {{ with .Site.Params.since }}{{ time.Format "2006" (time .) }} - {{ end }}{{ now.Format "2006" }} {{ .Site.Title }} · {{ with .Site.Params.author }}{{ . }}{{ end }}</span>
+      <span>运行 <span id="site-runtime" data-since="{{ .Site.Params.since }}">—</span> · Built with <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
     </div>
   </div>
 </footer>

@@ -4,12 +4,13 @@
   {{- if $i }},{{ end }}
   {
     "title": {{ $p.Title | jsonify }},
-    "url": {{ $p.Permalink | jsonify }},
+    "url": {{ $p.RelPermalink | jsonify }},
     "date": {{ $p.Date.Format "2006-01-02" | jsonify }},
     "summary": {{ (or $p.Description $p.Summary) | plainify | truncate 300 | jsonify }},
     "content": {{ $p.Plain | truncate 2000 | jsonify }},
     "tags": {{ with $p.Params.tags }}{{ . | jsonify }}{{ else }}[]{{ end }},
-    "categories": {{ with $p.Params.categories }}{{ . | jsonify }}{{ else }}[]{{ end }}
+    "categories": {{ with $p.Params.categories }}{{ . | jsonify }}{{ else }}[]{{ end }},
+    "series": {{ with $p.Params.series }}{{ . | jsonify }}{{ else }}[]{{ end }}
   }
 {{- end -}}
 ]

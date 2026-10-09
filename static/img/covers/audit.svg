@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#07120f"/>
+  <text x="72" y="240" font-family="monospace" font-size="20" fill="#94d8c3">auditd · auth.log · nginx access</text>
+  <text x="72" y="340" font-family="monospace" font-size="48" font-weight="700" fill="#e6edf3">日志审计与溯源</text>
+  <text x="72" y="400" font-family="monospace" font-size="18" fill="#8b98a5">timeline · detection · incident response</text>
+</svg>

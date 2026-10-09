@@ -3,9 +3,26 @@
 <title>{{ if .IsHome }}{{ .Site.Title }} — {{ .Site.Params.description }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 {{ with .Site.Params.keywords }}<meta name="keywords" content="{{ delimit . ", " }}">{{ end }}
+<meta name="author" content="{{ .Site.Params.author }}">
 <meta name="generator" content="Hugo">
+<meta name="theme-color" content="#0b0f14">
+<meta name="color-scheme" content="dark light">
 <link rel="canonical" href="{{ .Permalink }}">
-<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
-<link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }} RSS" href="{{ "/index.xml" | absURL }}">
-<link rel="stylesheet" href="/css/main.css">
+<link rel="icon" href="{{ "img/favicon.svg" | relURL }}" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }} RSS" href="{{ "index.xml" | absURL }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+{{ $ogImg := .Site.Params.defaultCover }}
+{{ with .Params.cover }}{{ $ogImg = . }}{{ end }}
+{{ if $ogImg }}<meta property="og:image" content="{{ $ogImg | absURL }}">{{ end }}
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+{{ if .IsHome }}<link rel="preload" as="image" href="{{ "img/hero-anime.jpg" | relURL }}">{{ end }}
+<script>
+(function(){try{var t=localStorage.getItem('gg-sec-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 {{ block "head-extra" . }}{{ end }}

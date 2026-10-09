@@ -1,6 +1,6 @@
 {{- $all := . -}}
 {{- $pinned := where $all "Params.weight" "gt" 0 -}}
-{{- $others := where $all "Params.weight" "eq" nil -}}
+{{- $others := $all | complement $pinned -}}
 {{- $pinned = sort $pinned "Params.weight" "asc" -}}
 {{- $others = sort $others "Date" "desc" -}}
-{{- return (append $others $pinned) -}}
+{{- return (append $pinned $others) -}}

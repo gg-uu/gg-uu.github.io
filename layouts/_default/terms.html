@@ -2,10 +2,10 @@
 <div class="container terms-page">
   <header class="page-head">
     <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
   </header>
 
   {{ if eq .Data.Plural "categories" }}
-    <!-- 分类页：CSS 环形统计图（构建时生成，零依赖） -->
     {{ $terms := .Data.Terms.ByCount }}
     {{ $total := 0 }}
     {{ range $terms }}{{ $total = add $total .Count }}{{ end }}
@@ -13,7 +13,7 @@
     {{ $acc := 0.0 }}
     {{ $n := len $terms }}
     <div class="chart-card">
-      <div class="chart-title">文章分类统计图 · 共 {{ $n }} 个分类 · {{ $total }} 篇文章</div>
+      <div class="chart-title">文章分类统计 · {{ $n }} 个分类 · {{ $total }} 篇文章</div>
       <div class="donut-wrap">
         <div class="donut" style="background: conic-gradient({{ range $i, $t := $terms }}{{ $pct := mul (div (float $t.Count) (float $total)) 100.0 }}{{ $start := $acc }}{{ $end := add $acc $pct }}{{ $acc = $end }} {{ index $colors $i }} {{ printf "%.2f" $start }}% {{ printf "%.2f" $end }}%{{ if lt $i (sub $n 1) }},{{ end }}{{ end }})">
           <div class="donut-hole">
@@ -28,15 +28,29 @@
         </ul>
       </div>
     </div>
-    <div class="terms-list">
+    <div class="terms-grid">
       {{ range $terms }}
-        <a class="term" href="{{ .Page.Permalink }}">
-          {{ .Page.Title }} <span class="term-count">{{ .Count }} 篇</span>
+        <a class="term-card" href="{{ .Page.Permalink }}">
+          <strong>{{ .Page.Title }}</strong>
+          <span class="term-count">{{ .Count }} 篇</span>
+        </a>
+      {{ end }}
+    </div>
+  {{ else if eq .Data.Plural "series" }}
+    <div class="series-grid">
+      {{ range .Data.Terms.ByCount }}
+        <a class="series-card" href="{{ .Page.Permalink }}">
+          <h3>{{ .Page.Title }}</h3>
+          <p>{{ .Count }} 篇文章 · 按时间顺序阅读</p>
+          <ul>
+            {{ range first 4 .Pages.ByDate }}
+              <li>{{ .Title }}</li>
+            {{ end }}
+          </ul>
         </a>
       {{ end }}
     </div>
   {{ else }}
-    <!-- 标签页：标签云 -->
     <div class="terms-cloud">
       {{ range .Data.Terms.ByCount }}
         <a class="term" href="{{ .Page.Permalink }}" style="--size: {{ add 0.9 (mul (div (float .Count) 5) 0.4) }}em">

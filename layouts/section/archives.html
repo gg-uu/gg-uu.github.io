@@ -10,9 +10,8 @@
   {{ $max := 0 }}
   {{ range $byMonth }}{{ if gt (len .Pages) $max }}{{ $max = len .Pages }}{{ end }}{{ end }}
 
-  <!-- CSS 柱状图（构建时生成，零依赖） -->
   <div class="chart-card">
-    <div class="chart-title">文章发布统计图</div>
+    <div class="chart-title">文章发布统计</div>
     <div class="bar-chart">
       {{ range $byMonth }}
         {{ $h := 0.0 }}{{ if gt $max 0 }}{{ $h = mul (div (float (len .Pages)) (float $max)) 100.0 }}{{ end }}
@@ -27,13 +26,20 @@
   </div>
 
   <div class="archive-list">
-    {{ range $byMonth }}
-      <h3 class="archive-month">{{ .Key }}</h3>
-      <ul class="archive-items">
-        {{ range .Pages }}
-          <li><time>{{ .Date.Format "01-02" }}</time><a href="{{ .Permalink }}">{{ .Title }}</a></li>
-        {{ end }}
-      </ul>
+    {{ range $posts.GroupByDate "2006" }}
+      <h2 class="archive-year">{{ .Key }}</h2>
+      {{ range .Pages.GroupByDate "2006-01" }}
+        <h3 class="archive-month">{{ .Key }}</h3>
+        <ul class="archive-items">
+          {{ range .Pages }}
+            <li>
+              <time>{{ .Date.Format "01-02" }}</time>
+              <a href="{{ .Permalink }}">{{ .Title }}</a>
+              {{ with .Params.categories }}<span class="archive-cat">{{ index . 0 }}</span>{{ end }}
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
     {{ end }}
   </div>
 </div>
